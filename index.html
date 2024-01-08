@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zuhair Aslam Dairies</title>
+    <link rel="icon" href="/dairy-farm-app/images/logo.jpg" type="image/png">
+
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+   <!-- Navigation Bar -->
+<div class="nav">
+    <ul class="nav-ul">
+        <li>
+            <a href="#" class="logo" id="logoLink">Zuhair<span class="Dar"> Aslam Dairies</span></a>
+        </li>
+        <li>
+            <div class="nav-links">
+                <ul class="links">
+                    <li><a class="nav-hover" href="#" id="homeLink">Home</a></li>
+                    <li><a class="nav-hover" href="#" id="aboutLink">About</a></li>
+                    <li><a class="nav-hover" href="#" id="productsLink">Products</a></li>
+                    <li><a class="nav-hover" href="#" id="contactLink">Contact us</a></li>
+                </ul>
+            </div>
+        </li>
+        <li>
+            <div class="nav-getstarted">
+                <ul class="login">
+                    <li><a class="nav-hover" href="#" id="loginLink">Login</a></li>
+                    <li>
+                        <a href="#" class="btn" id="getStartedLink">Get Started</a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+</div>
+
+ 
+
+    <div class="container">
+        <!-- Milk Record Form -->
+        <div class="milk-record">
+            <form onsubmit="event.preventDefault(); recordMilk()">
+                <label for="cowIdInput">Cow ID:</label>
+                <input type="text" id="cowIdInput" required />
+
+                <label for="milkAmountInput">Milk Amount (liters):</label>
+                <input type="number" id="milkAmountInput" min="0" required />
+
+                <button type="submit">Record Milk</button>
+            </form>
+        </div>
+
+        <!-- Disease Treatment Form -->
+        <div class="disease-treatment">
+            <form onsubmit="event.preventDefault(); recordTreatment()">
+                <label for="diseaseCowId">Cow ID:</label>
+                <input type="text" id="diseaseCowId" required />
+
+                <label for="treatmentInfo">Treatment Information:</label>
+                <textarea id="treatmentInfo" required></textarea>
+
+                <button type="submit">Record Treatment</button>
+            </form>
+        </div>
+ <!-- Landing Section -->
+    <div class="landing">
+        <div class="landing-txt">
+            <h1 class="heading">Pure milk and dairy products</h1>
+            <p class="mid-section">
+                At Zuhair Aslam Dairies, we're proud to share the simple pleasures of real dairy straight from our family farms.
+                Our products are pure organic and eco-friendly.
+            </p>
+            <a href="#reportSection" class="btn-bottom">View report</a>
+        </div>
+    </div>
+</div>
+
+        <!-- Animal Mating Form -->
+        <div class="animal-mating">
+            <form onsubmit="event.preventDefault(); recordMating()">
+                <label for="matingCowId">Cow ID:</label>
+                <input type="text" id="matingCowId" required />
+
+                <label for="matingDate">Mating Date:</label>
+                <input type="date" id="matingDate" required />
+
+                <button type="submit">Record Mating</button>
+            </form>
+        </div>
+
+        
+
+        <!-- Animal Info Form -->
+        <div class="animal-info">
+            <form onsubmit="event.preventDefault(); recordAnimalInfo()">
+                <label for="animalInfoCowId">Cow ID:</label>
+                <input type="text" id="animalInfoCowId" required />
+
+                <label for="animalPrice">Animal Price:</label>
+                <input type="number" id="animalPrice" min="0" required />
+
+                <button type="submit">Record Animal Info</button>
+            </form>
+        </div>
+
+        <!-- Expenses Form -->
+        <div class="expenses">
+            <form onsubmit="event.preventDefault(); recordExpenses()">
+                <label for="expenseType">Expense Type:</label>
+                <input type="text" id="expenseType" required />
+
+                <label for="expenseAmount">Expense Amount:</label>
+                <input type="number" id="expenseAmount" min="0" required />
+
+                <button type="submit">Record Expenses</button>
+            </form>
+        </div>
+
+        <!-- Report Section -->
+        <div class="report" id="reportSection">
+            <form action="" onsubmit="event.preventDefault(); generateReport()" method="">
+                <!-- Report form content here -->
+                <fieldset>
+                    <legend>Enter the milk production values</legend>
+
+                    <label for="a">Shed A:</label>
+                    <input type="number" id="a" name="a" min="0" />
+
+                    <label for="b">Shed B:</label>
+                    <input type="number" id="b" name="b" min="0" />
+
+                    <label for="c">Shed C:</label>
+                    <input type="number" id="c" name="c" min="0" />
+
+                    <label for="d">Shed D:</label>
+                    <input type="number" id="d" name="d" min="0" />
+                </fieldset>
+                <fieldset>
+                    <legend>Enter the milk price per liter</legend>
+                    <label for="price">Brookside Purchase Price:</label>
+                    <input type="number" id="price" name="price" min="0" />
+                </fieldset>
+
+                <button class="submit-btn" type="submit">GENERATE REPORT</button>
+            </form>
+            <a href="#reportSection" class="btn-bottom">View report</a>
+
+            <div class="report-body">
+                <h1>Here is your report:</h1>
+                <p class="placeholder" id="placeholder">Your report values will appear here:</p>
+                <div id="report-values" class="report-values hidden">
+                    <div class="daily-prod">
+                        <p class="report-item">
+                            Your production in shed A is <span id="report-a"></span> litres per day
+                        </p>
+                        <p class="report-item">
+                            Your production in shed B is <span id="report-b"></span> litres per day
+                        </p>
+                        <p class="report-item">
+                            Your production in shed C is <span id="report-c"></span> litres per day
+                        </p>
+                        <p class="report-item">
+                            Your production in shed D is <span id="report-d"></span> litres per day
+                        </p>
+                    </div>
+                    <div class="daily">
+                        <p class="report-item">
+                            Your daily income is <span id="daily"> </span> kenyan shillings
+                        </p>
+                    </div>
+                    <div class="weekly">
+                        <p class="report-item">
+                            Your weekly income is <span id="weekly"> </span> kenyan shillings
+                        </p>
+                    </div>
+                    <div class="monthly">
+                        <p class="report-item">
+                            Your income for January is <span id="january"> </span> kenyan shillings
+                        </p>
+                        <!-- Add similar lines for other months -->
+                    </div>
+                    <div
+                
+                    <p> class="report-item">
+                        Your income for February on a leap year is
+                        <span id="feb-leap"> </span> kenyan shillings
+                    </p>
+                    <p class="report-item">
+                        Your income for February on a non-leap year is
+                        <span id="february"> </span> kenyan shillings
+                    </p>
+                    <p class="report-item">
+                        Your income for March is
+                        <span id="march"> </span> kenyan shillings
+                    </p>
+                    <!-- Add lines for April to December -->
+                </div>
+                <div class="yearly">
+                    <p class="report-item">
+                        Your income on a leap year is
+                        <span id="leap-year"> </span> kenyan shillings
+                    </p>
+                    <p class="report-item">
+                        Your income on a non-leap year is
+                        <span id="non-leap-year"> </span> kenyan shillings
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+          
+   
+
+<script src="/dairy-farm-app/assets/js/main.js"></script>
+<script src="/dairy-farm-app/assets/js/server.js"></script>
+
+<footer>
+    <p>&copy; 2024 Zuhair Aslam Dairies . All rights reserved.</p>
+</footer>
+
+
+</body>
+
+</html>
