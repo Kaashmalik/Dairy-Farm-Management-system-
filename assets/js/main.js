@@ -272,8 +272,24 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-/// Your existing arrays to store records
+// Your existing arrays to store records
 let users = [];
+
+// Function to handle user login
+function loginUser() {
+    const username = document.getElementById("loginUsername").value;
+    const password = document.getElementById("loginPassword").value;
+
+    // Check if the provided credentials match any user in your users array or database
+    const user = users.find(user => user.username === username && user.password === password);
+
+    if (user) {
+        // Successfully logged in, perform the necessary actions (e.g., redirect, show user-specific content)
+        alert("Login successful!");
+    } else {
+        alert("Invalid username or password");
+    }
+}
 
 // Function to handle user registration
 function registerUser() {
@@ -293,7 +309,25 @@ function registerUser() {
 
     console.log("Registered user:", { username, email, phoneNumber, password });
 
-    // After successful registration, you can redirect or perform any other actions
-    // For example, you can show a success message or hide the registration modal
+    // After successful registration, you can redirect or perform other actions
     alert("Registration successful!");
 }
+
+// Toggle between login and registration forms
+function toggleForms() {
+    const loginForm = document.getElementById("loginForm");
+    const registrationForm = document.getElementById("registrationForm");
+
+    loginForm.classList.toggle("hidden");
+    registrationForm.classList.toggle("hidden");
+}
+
+// Update the loginLink event listener
+loginLink.addEventListener("click", function () {
+    toggleForms();
+});
+
+// Update the getStartedLink event listener to handle user registration
+getStartedLink.addEventListener("click", function () {
+    toggleForms();
+});

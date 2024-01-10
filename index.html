@@ -12,38 +12,63 @@
 </head>
 
 <body>
-   <!-- Navigation Bar -->
-<div class="nav">
-    <ul class="nav-ul">
-        <li>
-            <a href="#" class="logo" id="logoLink">Zuhair<span class="Dar"> Aslam Dairies</span></a>
-        </li>
-        <li>
-            <div class="nav-links">
+       <!-- Navigation Bar -->
+       <div class="nav">
+        <ul class="nav-ul">
+            <li>
+                <a href="#" class="logo" id="logoLink">Zuhair<span class="Dar"> Aslam Dairies</span></a>
+            </li>
+            <li class="nav-links">
                 <ul class="links">
                     <li><a class="nav-hover" href="#" id="homeLink">Home</a></li>
                     <li><a class="nav-hover" href="#" id="aboutLink">About</a></li>
                     <li><a class="nav-hover" href="#" id="productsLink">Products</a></li>
                     <li><a class="nav-hover" href="#" id="contactLink">Contact us</a></li>
                 </ul>
-            </div>
-        </li>
-        <li>
-            <div class="nav-getstarted">
+            </li>
+            <li class="nav-getstarted">
                 <ul class="login">
                     <li><a class="nav-hover" href="#" id="loginLink">Login</a></li>
                     <li>
                         <a href="#" class="btn" id="getStartedLink">Get Started</a>
                     </li>
                 </ul>
-            </div>
-        </li>
-    </ul>
-</div>
+            </li>
+        </ul>
+    </div>
+
 
  
 
-    <div class="container">
+<div class="container">
+                <!-- Login Form -->
+    <div class="login-form" id="loginForm">
+    <label for="loginUsername">Username:</label>
+    <input type="text" id="loginUsername" placeholder="Enter your username" required />
+
+    <label for="loginPassword">Password:</label>
+    <input type="password" id="loginPassword" placeholder="Enter your password" required />
+
+    <button type="button" onclick="loginUser()">Sign In</button>
+     </div>
+
+<!-- Registration Form -->
+<div class="registration-form hidden" id="registrationForm">
+    <label for="username">Username:</label>
+    <input type="text" id="username" placeholder="Choose a unique username" required />
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" placeholder="Enter your email address" required />
+
+    <label for="phoneNumber">Phone Number:</label>
+    <input type="text" id="phoneNumber" placeholder="Enter your phone number" required />
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" placeholder="Choose a strong password" required />
+
+    <button type="button" onclick="registerUser()">Sign Up</button>
+</div>
+
         <!-- Milk Record Form -->
         <div class="milk-record">
             <form onsubmit="event.preventDefault(); recordMilk()">
