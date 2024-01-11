@@ -4,35 +4,38 @@ let diseaseRecords = [];
 let matingRecords = [];
 let animalRecords = [];
 let expensesRecords = [];
+let users = []; // Added array to store user records
 
-
-// Function to record daily milk production
-function recordMilk() {
-    const cowId = document.getElementById("cowIdInput").value;
-    const milkAmount = parseFloat(document.getElementById("milkAmountInput").value);
-
-    dailyMilkRecords.push({ cowId, milkAmount, date: new Date() });
-
-    // Update the UI with daily milk records
-    updateDailyMilkInfo();
-}
-
-// Function to update UI with daily milk records
-function updateDailyMilkInfo() {
-    // Placeholder logic for updating UI with daily milk records
-    // Replace with your actual UI update logic
-    console.log("Updating UI with daily milk records:", dailyMilkRecords);
-}
+// Your existing arrays for report calculations
+const sheds = [];
+const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+let dailyIncome = 0;
 
 // Function to record disease treatment
-function recordTreatment() {
+async function recordTreatment() {
     const cowId = document.getElementById("diseaseCowId").value;
     const treatmentInfo = document.getElementById("treatmentInfo").value;
 
-    diseaseRecords.push({ cowId, treatmentInfo, date: new Date() });
+    try {
+        const response = await fetch('/record-treatment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ cowId, treatmentInfo }),
+        });
 
-    // Update the UI with disease treatment information
-    updateDiseaseInfo();
+        const data = await response.json();
+
+        if (data.success) {
+            diseaseRecords.push({ cowId, treatmentInfo, date: new Date() });
+            updateDiseaseInfo();
+        } else {
+            console.error('Error recording treatment:', data.message);
+        }
+    } catch (error) {
+        console.error('Error recording treatment:', error);
+    }
 }
 
 // Function to update UI with disease treatment information
@@ -43,14 +46,30 @@ function updateDiseaseInfo() {
 }
 
 // Function to record animal mating date
-function recordMating() {
+async function recordMating() {
     const cowId = document.getElementById("matingCowId").value;
     const matingDate = new Date(document.getElementById("matingDate").value);
 
-    matingRecords.push({ cowId, matingDate, date: new Date() });
+    try {
+        const response = await fetch('/record-mating', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ cowId, matingDate }),
+        });
 
-    // Update the UI with mating information
-    updateMatingInfo();
+        const data = await response.json();
+
+        if (data.success) {
+            matingRecords.push({ cowId, matingDate, date: new Date() });
+            updateMatingInfo();
+        } else {
+            console.error('Error recording mating:', data.message);
+        }
+    } catch (error) {
+        console.error('Error recording mating:', error);
+    }
 }
 
 // Function to update UI with mating information
@@ -61,14 +80,30 @@ function updateMatingInfo() {
 }
 
 // Function to record individual animal information
-function recordAnimalInfo() {
+async function recordAnimalInfo() {
     const cowId = document.getElementById("animalInfoCowId").value;
     const animalPrice = parseFloat(document.getElementById("animalPrice").value);
 
-    animalRecords.push({ cowId, animalPrice, date: new Date() });
+    try {
+        const response = await fetch('/record-animal-info', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ cowId, animalPrice }),
+        });
 
-    // Update the UI with individual animal information
-    updateAnimalInfo();
+        const data = await response.json();
+
+        if (data.success) {
+            animalRecords.push({ cowId, animalPrice, date: new Date() });
+            updateAnimalInfo();
+        } else {
+            console.error('Error recording animal information:', data.message);
+        }
+    } catch (error) {
+        console.error('Error recording animal information:', error);
+    }
 }
 
 // Function to update UI with individual animal information
@@ -79,14 +114,30 @@ function updateAnimalInfo() {
 }
 
 // Function to record expenses
-function recordExpenses() {
+async function recordExpenses() {
     const expenseType = document.getElementById("expenseType").value;
     const expenseAmount = parseFloat(document.getElementById("expenseAmount").value);
 
-    expensesRecords.push({ expenseType, expenseAmount, date: new Date() });
+    try {
+        const response = await fetch('/record-expenses', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ expenseType, expenseAmount }),
+        });
 
-    // Update the UI with expenses information
-    updateExpensesInfo();
+        const data = await response.json();
+
+        if (data.success) {
+            expensesRecords.push({ expenseType, expenseAmount, date: new Date() });
+            updateExpensesInfo();
+        } else {
+            console.error('Error recording expenses:', data.message);
+        }
+    } catch (error) {
+        console.error('Error recording expenses:', error);
+    }
 }
 
 // Function to update UI with expenses information
@@ -96,104 +147,51 @@ function updateExpensesInfo() {
     console.log("Updating UI with expenses information:", expensesRecords);
 }
 
+// Function to record milk production
+async function recordMilk() {
+    // ... (existing code)
+}
+
+// Function to update UI with milk production information
+function updateMilkInfo() {
+    // ... (existing code)
+}
+
+// Function to calculate total calf count
+function calculateTotalCalfCount() {
+    // Placeholder logic for calculating total calf count
+    // Replace with your actual logic
+    return matingRecords.length;
+}
+
+// Function to calculate profit or loss
+function calculateProfitOrLoss() {
+    // Placeholder logic for calculating profit or loss
+    // Replace with your actual logic
+    const totalIncome = dailyIncome * sheds.reduce((total, value) => total + value, 0);
+    const totalExpenses = expensesRecords.reduce((total, expense) => total + expense.expenseAmount, 0);
+
+    return totalIncome - totalExpenses;
+}
+
 // Function to generate the report
 function generateReport() {
-    // Placeholder logic for generating the report
-    // Replace with your actual report generation logic
-    console.log("Generating report...");
+    // ... (existing code)
 
-    // Your existing report generation logic
-    var sheds = [];
-    // get input values
-    sheds[0] = parseInt(document.getElementById("a").value);
-    sheds[1] = parseInt(document.getElementById("b").value);
-    sheds[2] = parseInt(document.getElementById("c").value);
-    sheds[3] = parseInt(document.getElementById("d").value);
+    // Calculate and display total calf count
+    const totalCalfCount = calculateTotalCalfCount();
+    document.getElementById("totalCalfCount").innerText = totalCalfCount;
 
-    // calculate income values
-    var dayTotal = sheds[0] + sheds[1] + sheds[2] + sheds[3];
+    // Calculate and display profit or loss
+    const profitOrLoss = calculateProfitOrLoss();
+    document.getElementById("profitOrLoss").innerText = profitOrLoss;
 
-    var price = parseInt(document.getElementById("price").value);
-
-    var dailyIncome = price * dayTotal;
-    var weeklyIncome = dailyIncome * 7;
-    var januaryIncome = dailyIncome * 31;
-    var februaryIncome = dailyIncome * 28;
-    var febLeapIncome = dailyIncome * 29;
-    var marchIncome = dailyIncome * 31;
-    var aprilIncome = dailyIncome * 30;
-    var mayIncome = dailyIncome * 31;
-    var juneIncome = dailyIncome * 30;
-    var julyIncome = dailyIncome * 31;
-    var augustIncome = dailyIncome * 31;
-    var septemberIncome = dailyIncome * 30;
-    var octoberIncome = dailyIncome * 31;
-    var novemberIncome = dailyIncome * 30;
-    var decemberIncome = dailyIncome * 31;
-
-    var leapYearIncome =
-        januaryIncome +
-        febLeapIncome +
-        marchIncome +
-        aprilIncome +
-        mayIncome +
-        juneIncome +
-        julyIncome +
-        augustIncome +
-        septemberIncome +
-        octoberIncome +
-        novemberIncome +
-        decemberIncome;
-    var nonLeapYearIncome =
-        januaryIncome +
-        februaryIncome +
-        marchIncome +
-        aprilIncome +
-        mayIncome +
-        juneIncome +
-        julyIncome +
-        augustIncome +
-        septemberIncome +
-        octoberIncome +
-        novemberIncome +
-        decemberIncome;
-
-    // hide placeholder text on the report
-    document.getElementById("placeholder").classList.add("hidden");
-
-    // show report values
-    document.getElementById("report-a").innerText = sheds[0];
-    document.getElementById("report-b").innerText = sheds[1];
-    document.getElementById("report-c").innerText = sheds[2];
-    document.getElementById("report-d").innerText = sheds[3];
-    document.getElementById("daily").innerText = dailyIncome;
-    document.getElementById("weekly").innerText = weeklyIncome;
-
-    document.getElementById("january").innerText = januaryIncome;
-    document.getElementById("february").innerText = februaryIncome;
-    document.getElementById("feb-leap").innerText = febLeapIncome;
-    document.getElementById("march").innerText = marchIncome;
-    document.getElementById("april").innerText = aprilIncome;
-    document.getElementById("may").innerText = mayIncome;
-    document.getElementById("june").innerText = juneIncome;
-    document.getElementById("july").innerText = julyIncome;
-    document.getElementById("august").innerText = augustIncome;
-    document.getElementById("september").innerText = septemberIncome;
-    document.getElementById("october").innerText = octoberIncome;
-    document.getElementById("november").innerText = novemberIncome;
-    document.getElementById("december").innerText = decemberIncome;
-    document.getElementById("leap-year").innerText = leapYearIncome;
-    document.getElementById("non-leap-year").innerText = nonLeapYearIncome;
-
-    // show report text
-    document.getElementById("report-values").classList.remove("hidden");
+    // ... (existing code)
 }
 
 // Function to update the report section
 function updateReport(data) {
-    // Placeholder logic for updating the report section
-    // Replace with your actual report update logic
-    console.log("Updating report section with data:", data);
+    // ... (existing code)
 }
 
 // Function to handle form submissions
@@ -264,16 +262,13 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     loginLink.addEventListener("click", function () {
-        // showLoginModal();
+        toggleForms(); // Toggle login/registration forms
     });
 
     getStartedLink.addEventListener("click", function () {
-        window.location.href = "/dairy-farm-app/assets/HTML/get_started.html";
+        toggleForms(); // Toggle login/registration forms
     });
 });
-
-// Your existing arrays to store records
-let users = [];
 
 // Function to handle user login
 function loginUser() {
@@ -322,12 +317,7 @@ function toggleForms() {
     registrationForm.classList.toggle("hidden");
 }
 
-// Update the loginLink event listener
-loginLink.addEventListener("click", function () {
-    toggleForms();
-});
-
 // Update the getStartedLink event listener to handle user registration
 getStartedLink.addEventListener("click", function () {
-    toggleForms();
+    toggleForms(); // Toggle login/registration forms
 });
