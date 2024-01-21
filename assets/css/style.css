@@ -62,7 +62,7 @@ a {
     color: #E8BC5A;
 }
 
-.container>.landing {
+.container > .landing {
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://images.pexels.com/photos/4919741/pexels-photo-4919741.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
     height: 100vh;
     background-position: center;
@@ -77,7 +77,8 @@ a {
     justify-content: center;
     align-items: center;
     height: 1060px;
-    width: 1280px;
+    width: 80%; /* Adjusted width for responsiveness */
+    margin: auto; /* Centered the container */
 }
 
 .landing-txt {
@@ -140,14 +141,14 @@ a {
 
 .report-body {
     margin: auto 0;
-    width: 35%;
+    width: 80%;
     padding: 10px 20px;
     background: #f4f7f8;
     border-radius: 8px;
 }
 
 form {
-    width: 35%;
+    width: 80%;
     margin: auto 0;
     padding: 10px 20px;
     background: #f4f7f8;
@@ -247,18 +248,11 @@ label {
     }
 }
 
-.container>.milk-record {
-    margin: auto 0;
-    width: 80%;
-    padding: 10px 10px;
-    background: #f4f7f8;
-    border-radius: 8px;
-}
-
-.container>.disease-treatment,
-.container>.animal-mating,
-.container>.animal-info,
-.container>.expenses {
+.container > .milk-record,
+.container > .disease-treatment,
+.container > .animal-mating,
+.container > .animal-info,
+.container > .expenses {
     margin: auto 0;
     width: 80%;
     padding: 10px 10px;
@@ -306,4 +300,10 @@ footer p {
     margin: 0;
     color: black;
     /* Blue text color */
+}
+
+#log {
+    width: 80%; /* Adjusted width for responsiveness */
+    margin: auto; /* Centered the container */
+    padding-left: 5%;
 }

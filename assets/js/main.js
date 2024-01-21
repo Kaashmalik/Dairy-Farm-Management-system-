@@ -321,3 +321,128 @@ function toggleForms() {
 getStartedLink.addEventListener("click", function () {
     toggleForms(); // Toggle login/registration forms
 });
+async function generateReport() {
+    try {
+        const response = await fetch('/fetch-report-data');
+        const data = await response.json();
+
+        if (data.success) {
+            // ... (existing code)
+
+            // Calculate profit or loss
+            const totalIncome = calculateTotalIncome(milkTotal);
+            const profitOrLoss = totalIncome - totalExpenses;
+
+            // Update UI with calculated values
+            document.getElementById('milkTotal').innerText = milkTotal;
+            document.getElementById('diseaseCount').innerText = diseaseCount;
+            document.getElementById('matingCount').innerText = matingCount;
+            document.getElementById('totalAnimalValue').innerText = totalAnimalValue;
+            document.getElementById('totalExpenses').innerText = totalExpenses;
+            document.getElementById('profitOrLoss').innerText = profitOrLoss;
+
+            updateReport(data); // Pass the calculated data to update the report section
+        } else {
+            console.error('Error fetching report data:', data.message);
+        }
+    } catch (error) {
+        console.error('Error generating report:', error);
+    }
+}
+        
+    
+
+// Add your specific calculation functions here
+function calculateTotalMilk(milkRecords) {
+    return milkRecords.reduce((total, record) => total + record.milkAmount, 0);
+}
+
+function calculateTotalAnimalValue(animalRecords) {
+    return animalRecords.reduce((total, record) => total + record.animalPrice, 0);
+}
+
+function calculateTotalExpenses(expensesRecords) {
+    return expensesRecords.reduce((total, record) => total + record.expenseAmount, 0);
+}
+
+function calculateTotalIncome(milkTotal) {
+    // You can add more sources of income here if needed
+    return milkTotal;
+}
+async function downloadReport() {
+    try {
+        const response = await fetch('/download-report');
+        const blob = await response.blob();
+
+        // Create a link element and trigger the download
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'report.pdf';
+        link.click();
+    } catch (error) {
+        console.error('Error downloading report:', error);
+    }
+}
+function updateReport(data) {
+    // Clear existing report content
+    const reportBody = document.querySelector('.report-body');
+    reportBody.innerHTML = '';
+
+    // Add new report values for each frequency
+    addReportItem('daily', `Your daily income is ${calculateDailyIncome(data.milkRecords)} Kenyan shillings`);
+    addReportItem('weekly', `Your weekly income is ${calculateWeeklyIncome(data.milkRecords)} Kenyan shillings`);
+    addReportItem('monthly', `Your income for the current month is ${calculateMonthlyIncome(data.milkRecords)} Kenyan shillings`);
+    addReportItem('yearly', `Your income for the current year is ${calculateYearlyIncome(data.milkRecords)} Kenyan shillings`);
+}
+
+// Helper function to add a report item
+function addReportItem(frequency, text) {
+    const reportItem = document.createElement('div');
+    reportItem.classList.add(frequency);
+    reportItem.innerHTML = `<p class="report-item">${text}</p>`;
+    document.querySelector('.report-body').appendChild(reportItem);
+}
+function calculateDailyIncome(milkRecords) {
+    // Calculate daily income logic here
+    // Example: Sum of milk amounts for the day
+    const today = new Date().toISOString().split('T')[0];
+    return milkRecords
+        .filter(record => record.date.toISOString().split('T')[0] === today)
+        .reduce((total, record) => total + record.milkAmount, 0);
+}
+
+function calculateWeeklyIncome(milkRecords) {
+    // Calculate weekly income logic here
+    // Example: Sum of milk amounts for the week
+    const today = new Date();
+    const firstDayOfWeek = new Date(today.setDate(today.getDate() - today.getDay()));
+    const lastDayOfWeek = new Date(today.setDate(firstDayOfWeek.getDate() + 6));
+
+    return milkRecords
+        .filter(record => record.date >= firstDayOfWeek && record.date <= lastDayOfWeek)
+        .reduce((total, record) => total + record.milkAmount, 0);
+}
+
+function calculateMonthlyIncome(milkRecords) {
+    // Calculate monthly income logic here
+    // Example: Sum of milk amounts for the month
+    const today = new Date();
+    const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+    const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+    return milkRecords
+        .filter(record => record.date >= firstDayOfMonth && record.date <= lastDayOfMonth)
+        .reduce((total, record) => total + record.milkAmount, 0);
+}
+
+function calculateYearlyIncome(milkRecords) {
+    // Calculate yearly income logic here
+    // Example: Sum of milk amounts for the year
+    const today = new Date();
+    const firstDayOfYear = new Date(today.getFullYear(), 0, 1);
+    const lastDayOfYear = new Date(today.getFullYear(), 11, 31);
+
+    return milkRecords
+        .filter(record => record.date >= firstDayOfYear && record.date <= lastDayOfYear)
+        .reduce((total, record) => total + record.milkAmount, 0);
+}
